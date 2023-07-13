@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Latex",
+    "\\Markdown"
   ],
-  "SelectedNode": "\\README.md",
+  "SelectedNode": "\\Markdown\\markdown.md",
   "PreviewInSolutionExplorer": false
 }
