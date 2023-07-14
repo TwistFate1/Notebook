@@ -169,10 +169,10 @@ See the section on [`code`](#code).
 [link](https://www.example.com/my%20great%20page)
 
 # Markdown 图片语法
-![这是图片](Linux.png "Linux")
+![这是图片](./picture/Linux.png "Linux")
 
 ## 链接图片
-[![这是图片](Linux.png "Linux")](https://markdown.com.cn)
+[![这是图片](./picture/Linux.png "Linux")](https://markdown.com.cn)
 
 # Markdown 转义字符语法
 \*
