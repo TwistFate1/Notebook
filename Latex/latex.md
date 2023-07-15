@@ -12,8 +12,8 @@
 > 文档查看
 
 ## 社区交流
-> stackoverflow  
-> Latex工作室
+> Stack Overflow  
+> LaTeX工作室
 
 # 正式部分
 ## 结构化文档
@@ -200,3 +200,186 @@ dd ee ff
 
 ## 数学公式
 一切数学公式（包括符号）都要在数学模式下输入。
+示例：
+```LaTeX
+\documentclass{article}  
+\begin{document}  
+text $n=5$
+
+text n=5
+\end{document}
+```
+![预览结果](./picture/formula.png)
+- 行内（inline）公式：使用一对符号$$来表示。
+- 显示（display）公式。
+    - 简单的不编号公式用命令\\[和\]\标示。（不要使用$$)
+    - 基本的编号的公式用quation环境
+    - 更复杂的结构，使用amsmath宏包提供的专门的数学环境。（不要使用eqnarray环境）
+
+## 数学结构
+- 上标和下标：用^和_标示。
+- 上下划线与花括号：\overline,\underline,\overbrace,\underbrace
+- 分式：\frac{分子}{分母}
+- 根式：\sqrt[次数]{根号下}
+- 矩阵：使用 amsmath 宏包提供的专门的矩阵环境 matrix，pmatrix，bmatrix等。特别复杂的矩阵（如带线条）使用array环境作为表格画出。
+
+## 数学符号
+- 数学字母a,b,α，数学字体\mathbb、\mathcal等
+- 普通符号：如\infty，、angle
+- 二元运算符：a+b，a-b等
+- 二元关系符：a=b等
+- 括号：\left，\right放大
+- 标点：逗号、分好（\colon）
+
+## 科技功能
+**不要重复造轮子**
+> amsmath 和 mathtools  
+> siunitx：数字单位的一揽子解决方案  
+> chemformula：编写化学式
+
+## 列表环境
+- enumerate 编号
+- itemize 不编号
+- description 有标题
+
+## 定理类环境
+- \newtheorem 定义定理类环境，如：\newtheorem{thm}{定理}[section]
+- 使用定理类环境，如：
+  ```LaTeX
+  \begin{thm}
+  一个定理
+  \end{thm}
+  ```
+
+## 诗歌与引文
+- verse
+- quote
+- quotation
+
+## 抄录代码
+- \verb 命令，如：
+  ```LaTeX
+  代码 \verb|#include <iostream>|
+  ```
+- verbatim
+  ```LaTeX
+  \begin{verbatim}
+  #include <stdio.h>
+  int main() {
+      puts("Hello World!");
+      return 0;
+  }
+  \end{verbatim}
+  ```
+
+## 高级代码：语法高亮
+- 使用 listings 宏包
+  ```LaTeX
+
+  ```
+- minted 宏包（调用 Pygment）
+
+## 算法结构
+- clrscode 宏包（算法导论）
+- algorithm2e 宏包
+- algorithmicx 宏包的 algpseudocode 格式
+
+## 画表格
+使用 tabular 环境。
+```LaTeX
+\begin{tabular}{|rr|}
+\hline
+输入 & 输出 \\ \hline
+$-2$ & 4 \\
+0 & 0 \\
+2 & 4 \\ \hline\
+\end{tabular}
+```
+![预览结果](./picture/form.png)
+
+## 功能各异的表格宏包
+- 单元格处理：multirow、makecell
+- 长表格：longtable、xtab
+- 定宽表格：xtabular
+- 表现控制：booktabs（三线表）、diagbox（斜线表）、arydshln
+- 表列格式：array
+- 综合应用：tabu
+
+## 插图
+使用 graphicx 宏包提供的 \includegraphics 命令。
+```LaTeX
+\includegraphics[Width=2cm]{文件名}
+```
+
+## 代码画图
+优先外部工具画图，特别是可视化工具（pdf格式），数学图形使用MATLAB等。  
+使用合适的宏包，利用 `LaTeX` 代码画图。
+
+## 浮动体
+- figure 环境
+- table 环境
+- 其他环节可以使用 float 宏包
+浮动体的标题用 \caption 命令得到，自动编号。
+
+## 自动化工具
+- 目录与交叉引用
+- hyperref：PDF 的链接与书签
+- 参考文献 BibTeX
+- 设置文献格式
+    - 选择合适的 `.bst` 格式
+    - natbib 与作者-年格式
+    - 利用 custom-bib 产生定制的格式文件
+    - biblatex + Biber：文献处理的新方式
+
+# 设计文档格式
+## 基本原则
+~~格式与内容要分离~~不要在意细节  
+
+## 使用宏包
+合理使用宏包：
+- 尽量不造轮子
+- 尽量排除不需要的宏包
+
+## 格式控制功能
+
+### 字体字号
+字体
+- \rmfamily, \textrm{...}
+- \sffamily, \textsf{...}
+- \ttfamily, \texttt{...}  
+字号：\Huge, \LARGE, \Large, \large, 
+\normalsize, \small, \footnotesize, 
+\scriptsize, \tiny  
+中文字号：\zihao{5}, \zihao{-3}
+
+### 对齐
+\centering, \raggedleft, \raggedright
+
+### 空白间距
+\hspace{2cm}, \vspace{3cm}
+
+### 版面布局
+geometry 宏包（纸张）
+fancyhdr 宏包（版面）
+
+### 分页断行
+\linebreak, \\  
+\pagebreak, \newpage, \clearpage, \cleardoublepage
+
+### 盒子
+\mbox{内容}  
+\parbox{4em}{内容}, minipage
+
+## 格式应用于文档
+
+### 使用在导言区单独设置格式
+预定义格式不符合需要。
+- 直接设置相关参数。
+- 修改部分命令定义。
+- 利用工具宏包完成设置。
+
+### 利用自定义命令和环境
+可以使用自定义的命令和环境实现语义的接口。
+
+### 章节标题
+ctex 宏包及文档类，用 \ctexset 定制。
