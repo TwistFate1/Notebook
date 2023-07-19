@@ -274,9 +274,6 @@ text n=5
 
 ## 高级代码：语法高亮
 - 使用 listings 宏包
-  ```LaTeX
-
-  ```
 - minted 宏包（调用 Pygment）
 
 ## 算法结构
