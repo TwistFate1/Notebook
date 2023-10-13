@@ -106,7 +106,7 @@ I ___really___ like using Markdown.
 1. First
 2. Second
 
-    ![Tux, the Linux mascot](Linux.png)
+    ![Tux, the Linux mascot](./picture/Linux.png)
 
 3. Third
 
