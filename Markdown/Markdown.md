@@ -137,10 +137,10 @@ ___
 # Markdown 链接语法
 这是一个链接 [Markdown语法](https://markdown.com.cn)
 
-## 给链接增加Title
+## 给链接增加 Title
 这是一个链接 [Markdown语法](https://markdown.com.cn "最好的Markdown教程")
 
-## 网址和Email地址
+## 网址和 Email 地址
 <https://markdown.com.cn>
 <od_code_01@qq.com>
 
@@ -187,7 +187,7 @@ AT&T
 
 4 < 5
 
-# Markdown 内嵌HTML标签
+# Markdown 内嵌 HTML 标签
 
 ## 行级内联标签
 <em>word</em>
