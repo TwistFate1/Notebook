@@ -50,4 +50,28 @@
 
     > 能够调到容器中的任何一个元素。
 
-### 迭代器层次结构
+### 序列容器
+
+- vector
+- deque
+- list
+- forward_list
+- queue
+- priority_quene
+- stack
+- array
+
+### 关联容器
+
+- set
+- multiset
+- map
+- multimap
+
+## 函数对象
+
+### 函数符
+
+> lambda 表达式。
+
+## 算法
