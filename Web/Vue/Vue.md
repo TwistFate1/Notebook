@@ -520,37 +520,706 @@ methods: {
 - `.prevent`
 - `.self`
 
-```html
-<!-- 单击事件将停止传递 -->
-<a @click.stop="doThis"></a>
+  ```html
+  <!-- 单击事件将停止传递 -->
+  <a @click.stop="doThis"></a>
 
-<!-- 提交事件将不再重新加载页面 -->
-<form @submit.prevent="onSubmit"></form>
+  <!-- 提交事件将不再重新加载页面 -->
+  <form @submit.prevent="onSubmit"></form>
 
-<!-- 修饰语可以使用链式书写 -->
-<a @click.stop.prevent="doThat"></a>
+  <!-- 修饰语可以使用链式书写 -->
+  <a @click.stop.prevent="doThat"></a>
 
-<!-- 也可以只有修饰符 -->
-<form @submit.prevent></form>
+  <!-- 也可以只有修饰符 -->
+  <form @submit.prevent></form>
 
-<!-- 仅当 event.target 是元素本身时才会触发事件处理器 -->
-<!-- 例如：事件处理器不来自子元素 -->
-<div @click.self="doThat">...</div>
-```
+  <!-- 仅当 event.target 是元素本身时才会触发事件处理器 -->
+  <!-- 例如：事件处理器不来自子元素 -->
+  <div @click.self="doThat">...</div>
+  ```
 
 - `.capture`
 - `.once`
 - `.passive`
 
+  ```html
+  <!-- 添加事件监听器时，使用 `capture` 捕获模式 -->
+  <!-- 例如：指向内部元素的事件，在被内部元素处理前，先被外部处理 -->
+  <div @click.capture="doThis">...</div>
+
+  <!-- 点击事件最多被触发一次 -->
+  <a @click.once="doThis"></a>
+
+  <!-- 滚动事件的默认行为 (scrolling) 将立即发生而非等待 `onScroll` 完成 -->
+  <!-- 以防其中包含 `event.preventDefault()` -->
+  <div @scroll.passive="onScroll">...</div>
+  ```
+
+#### 按键修饰符
+
 ```html
-<!-- 添加事件监听器时，使用 `capture` 捕获模式 -->
-<!-- 例如：指向内部元素的事件，在被内部元素处理前，先被外部处理 -->
-<div @click.capture="doThis">...</div>
-
-<!-- 点击事件最多被触发一次 -->
-<a @click.once="doThis"></a>
-
-<!-- 滚动事件的默认行为 (scrolling) 将立即发生而非等待 `onScroll` 完成 -->
-<!-- 以防其中包含 `event.preventDefault()` -->
-<div @scroll.passive="onScroll">...</div>
+<!-- 仅在 `key` 为 `Enter` 时调用 `submit` -->
+<input @keyup.enter="submit" />
 ```
+
+> 可以直接使用按键名称作为修饰符，但需要转为 kebab-case 形式。
+
+```html
+<input @keyup.page-down="onPageDown" />
+```
+
+> 对应 `PageDown` 调用事件处理。
+
+- `.enter`
+- `.tab`
+- `.delete`
+- `.esc`
+- `.space`
+- `.up`
+- `.down`
+- `.left`
+- `.right`
+- `.ctrl`
+- `.alt`
+- `.shift`
+- `.meta`
+
+> `.exact` 修饰符允许精确控制触发事件所需的系统修饰符的组合。
+
+```html
+<!-- 当按下 Ctrl 时，即使同时按下 Alt 或 Shift 也会触发 -->
+<button @click.ctrl="onClick">A</button>
+
+<!-- 仅当按下 Ctrl 且未按任何其他键时才会触发 -->
+<button @click.ctrl.exact="onCtrlClick">A</button>
+
+<!-- 仅当没有按下任何系统按键时触发 -->
+<button @click.exact="onClick">A</button>
+```
+
+#### 鼠标按键修饰符
+
+- `.left`
+- `.right`
+- `.middle`
+
+### 表单输入绑定
+
+> 手动连接值绑定和更改事件监听器：
+
+```html
+<input
+  :value="text"
+  @input="event => text = event.target.value">
+```
+
+> `v-model` 简化：
+
+```html
+<input v-model="text">
+```
+
+**注意：** 对于 `IME` 拼字阶段不会实时更新，如需要请手动编写！
+
+#### 值绑定
+
+> 利用 `v-bind` 绑定动态数据。
+
+#### 修饰符
+
+- `.lazy`
+
+  ```html
+  <!-- 在 "change" 事件后同步更新而不是 "input" -->
+  <input v-model.lazy="msg" />
+  ```
+
+- `.number`
+
+  ```html
+  <input v-model.number="age" />
+  ```
+
+- `.trim`
+
+  ```html
+  <input v-model.trim="msg" />
+  ```
+
+### 生命周期
+
+![lifecycle](./images/lifecycle.png "lifecycle")
+
+### 侦听器
+
+> `watch` 选项，在每次响应式属性发生变化时触发一个函数。
+
+```js
+export default {
+  data() {
+    return {
+      question: '',
+      answer: 'Questions usually contain a question mark. ;-)',
+      loading: false
+    }
+  },
+  watch: {
+    // 每当 question 改变时，这个函数就会执行
+    question(newQuestion, oldQuestion) {
+      if (newQuestion.includes('?')) {
+        this.getAnswer()
+      }
+    }
+  },
+  methods: {
+    async getAnswer() {
+      this.loading = true
+      this.answer = 'Thinking...'
+      try {
+        const res = await fetch('https://yesno.wtf/api')
+        this.answer = (await res.json()).answer
+      } catch (error) {
+        this.answer = 'Error! Could not reach the API. ' + error
+      } finally {
+        this.loading = false
+      }
+    }
+  }
+}
+```
+
+```html
+<p>
+  Ask a yes/no question:
+  <input v-model="question" :disabled="loading" />
+</p>
+<p>{{ answer }}</p>
+```
+
+> `watch` 选项也支持把键设置成用 `.` 分隔的路径：
+
+```js
+export default {
+  watch: {
+    // 注意：只能是简单的路径，不支持表达式。
+    'some.nested.key'(newValue) {
+      // ...
+    }
+  }
+}
+```
+
+#### 深层侦听器
+
+> 深层侦听器：
+
+```js
+export default {
+  watch: {
+    someObject: {
+      handler(newValue, oldValue) {
+        // 注意：在嵌套的变更中，
+        // 只要没有替换对象本身，
+        // 那么这里的 `newValue` 和 `oldValue` 相同
+      },
+      deep: true
+    }
+  }
+}
+```
+
+#### 及时回调的侦听器
+
+> 强制回调函数立即执行：
+
+```js
+export default {
+  // ...
+  watch: {
+    question: {
+      handler(newQuestion) {
+        // 在组件实例创建时会立即调用
+      },
+      // 强制立即执行回调
+      immediate: true
+    }
+  }
+  // ...
+}
+```
+
+#### 一次性侦听器
+
+```js
+export default {
+  watch: {
+    source: {
+      handler(newValue, oldValue) {
+        // 当 `source` 变化时，仅触发一次
+      },
+      once: true
+    }
+  }
+}
+```
+
+#### 回调的触发时机
+
+> 默认情况下，侦听器回调会在父组件更新 (如有) 之后、所属组件的 DOM 更新之前被调用。
+>
+> 在侦听器回调中能访问被 Vue 更新之后的所属组件的 DOM:
+
+```js
+export default {
+  // ...
+  watch: {
+    key: {
+      handler() {},
+      flush: 'post'
+    }
+  }
+}
+```
+
+> 在 Vue 进行任何更新之前触发：
+
+```js
+export default {
+  // ...
+  watch: {
+    key: {
+      handler() {},
+      flush: 'sync'
+    }
+  }
+}
+```
+
+> 也可以使用组件实例的 `$watch()` 方法来命令式地创建一个侦听器：
+
+```js
+export default {
+  created() {
+    this.$watch('question', (newQuestion) => {
+      // ...
+    })
+  }
+}
+```
+
+#### 停止侦听器
+
+> 用 `watch` 选项或者 `$watch()` 实例方法声明的侦听器，会在宿主组件卸载时自动停止。
+>
+> 在组件卸载之前就停止一个侦听器，这时可以调用 `$watch()` API 返回的函数：
+
+```js
+const unwatch = this.$watch('foo', callback)
+
+// ...当该侦听器不再需要时
+unwatch()
+```
+
+### 模板引用
+
+> 直接访问底层 DOM 元素，使用特殊的 `ref`：
+
+```html
+<input ref="input">
+```
+
+#### 访问模板引用
+
+> **挂载结束后**引用都会被暴露在 this.$refs 之上：
+
+```html
+<script>
+export default {
+  mounted() {
+    this.$refs.input.focus()
+  }
+}
+</script>
+
+<template>
+  <input ref="input" />
+</template>
+```
+
+#### 函数模板引用
+
+```html
+<input :ref="(el) => { /* 将 el 赋值给一个数据属性或 ref 变量 */ }">
+```
+
+### 组件基础
+
+> 组件允许我们将 UI 划分为独立的、可重用的部分，并且可以对每个部分进行单独的思考。
+
+#### 定义一个组件
+
+> Vue 组件定义在一个单独的 `.vue` 文件中，单文件组件（SFC）：
+
+```html
+<script>
+export default {
+  data() {
+    return {
+      count: 0
+    }
+  }
+}
+</script>
+
+<template>
+  <button @click="count++">You clicked me {{ count }} times.</button>
+</template>
+```
+
+> 不使用构建步骤时，一个 Vue 组件以一个包含 Vue 特定选项的 JavaScript 对象来定义：
+
+```js
+export default {
+  data() {
+    return {
+      count: 0
+    }
+  },
+  template: `
+    <button @click="count++">
+      You clicked me {{ count }} times.
+    </button>`
+}
+```
+
+#### 使用组件
+
+```html
+<script>
+import ButtonCounter from './ButtonCounter.vue'
+
+export default {
+  components: {
+    ButtonCounter
+  }
+}
+</script>
+
+<template>
+  <h1>Here is a child component!</h1>
+  <ButtonCounter />
+</template>
+```
+
+#### 传递 props
+
+> 当一个值被传递给 prop 时，它将成为该组件实例上的一个属性。该属性的值可以像其他组件属性一样，在模板和组件的 `this` 上下文中访问。
+
+```html
+<!-- BlogPost.vue -->
+<script>
+export default {
+  props: ['title']
+}
+</script>
+
+<template>
+  <h4>{{ title }}</h4>
+</template>
+```
+
+#### 事件监听
+
+> 父组件可以通过 v-on 或 @ 来选择性地监听子组件上抛的事件，就像监听原生 DOM 事件那样：
+
+```html
+<script>
+data() {
+  return {
+    posts: [
+      /* ... */
+    ],
+    postFontSize: 1
+  }
+}
+</script>
+
+<template>
+  <div :style="{ fontSize: postFontSize + 'em' }">
+    <BlogPost
+      v-for="post in posts"
+      :key="post.id"
+      :title="post.title"
+      @enlarge-text="postFontSize += 0.1"
+    />
+  </div>
+</template>
+```
+
+> 子组件可以通过调用内置的 `$emit` 方法，通过传入事件名称来抛出一个事件：
+
+```html
+<!-- BlogPost.vue -->
+<script>
+export default {
+  props: ['title'],
+  emits: ['enlarge-text']
+}
+</script>
+
+<template>
+  <div class="blog-post">
+    <h4>{{ title }}</h4>
+    <button @click="$emit('enlarge-text')">Enlarge text</button>
+  </div>
+</template>
+```
+
+> 通过 `emits` 选项来声明需要抛出的事件是最佳实践。
+
+#### 通过插槽来分配内容
+
+> 向组件中传递内容：
+
+```html
+<template>
+  <AlertBox>
+    Something bad happened.
+  </AlertBox>
+</template>
+```
+
+> 使用 `<slot>` 作为一个占位符，父组件传递进来的内容就会渲染在这里:
+
+```html
+<!-- AlertBox.vue -->
+<template>
+  <div class="alert-box">
+    <strong>This is an Error for Demo Purposes</strong>
+    <slot />
+  </div>
+</template>
+
+<style scoped>
+.alert-box {
+  /* ... */
+}
+</style>
+```
+
+#### 动态组件
+
+```html
+<template>
+<!-- currentTab 改变时组件也改变 -->
+  <component :is="currentTab"></component>
+</template>
+```
+
+## 深入组件
+
+### 注册
+
+#### 全局注册
+
+> 使用 Vue 应用实例的 `.component()` 方法，让组件在当前 Vue 应用中全局可用。
+
+```js
+import { createApp } from 'vue'
+
+const app = createApp({})
+
+app.component(
+  // 注册的名字
+  'MyComponent',
+  // 组件的实现
+  {
+    /* ... */
+  }
+)
+```
+
+> 如果使用单文件组件，你可以注册被导入的 `.vue` 文件：
+
+```js
+import MyComponent from './App.vue'
+
+app.component('MyComponent', MyComponent)
+```
+
+#### 局部注册
+
+> 局部注册需要使用 `components` 选项：
+
+```html
+<script>
+import ComponentA from './ComponentA.vue'
+
+export default {
+  components: {
+    ComponentA
+  }
+}
+</script>
+
+<template>
+  <ComponentA />
+</template>
+```
+
+> 对于每个 `components` 对象里的属性，它们的 key 名就是注册的组件名，而值就是相应组件的实现。
+
+**注意：** 局部注册的组件在后代组件中不可用。
+
+#### 组件名格式
+
+> PascalCase 是合法的 JavaScript 标识符。
+>
+> Vue 支持将模板中使用 kebab-case 的标签解析为使用 PascalCase 注册的组件。
+
+### Props
+
+#### Props 声明
+
+> props 需要使用 `props` 选项来定义：
+
+```js
+export default {
+  props: ['foo'],
+  created() {
+    // props 会暴露到 `this` 上
+    console.log(this.foo)
+  }
+}
+```
+
+> 除了使用字符串数组来声明 props 外，还可以使用对象的形式：
+
+```js
+export default {
+  props: {
+    title: String,
+    likes: Number
+  }
+}
+```
+
+> 使用 camelCase 形式（合法的 JavaScript 标识符），但通常为 kebab-case 形式（和 HTML attribute 对齐）。
+
+#### 使用一个对象绑定多个 prop
+
+> 使用没有参数的 `v-bind`:
+
+```js
+export default {
+  data() {
+    return {
+      post: {
+        id: 1,
+        title: 'My Journey with Vue'
+      }
+    }
+  }
+}
+```
+
+```html
+<template>
+  <BlogPost v-bind="post" />
+  <!-- 等价于 <BlogPost :id="post.id" :title="post.title" /> -->
+</template>
+```
+
+#### 单向数据流
+
+> 所有的 props 都遵循着单向绑定原则。
+
+#### Prop 校验
+
+```js
+export default {
+  props: {
+    // 基础类型检查
+    //（给出 `null` 和 `undefined` 值则会跳过任何类型检查）
+    propA: Number,
+    // 多种可能的类型
+    propB: [String, Number],
+    // 必传，且为 String 类型
+    propC: {
+      type: String,
+      required: true
+    },
+    // 必传但可为 null 的字符串
+    propD: {
+      type: [String, null],
+      required: true
+    },
+    // Number 类型的默认值
+    propE: {
+      type: Number,
+      default: 100
+    },
+    // 对象类型的默认值
+    propF: {
+      type: Object,
+      // 对象或者数组应当用工厂函数返回。
+      // 工厂函数会收到组件所接收的原始 props
+      // 作为参数
+      default(rawProps) {
+        return { message: 'hello' }
+      }
+    },
+    // 自定义类型校验函数
+    // 在 3.4+ 中完整的 props 作为第二个参数传入
+    propG: {
+      validator(value, props) {
+        // The value must match one of these strings
+        return ['success', 'warning', 'danger'].includes(value)
+      }
+    },
+    // 函数类型的默认值
+    propH: {
+      type: Function,
+      // 不像对象或数组的默认，这不是一个
+      // 工厂函数。这会是一个用来作为默认值的函数
+      default() {
+        return 'Default function'
+      }
+    }
+  }
+}
+```
+
+#### Boolean 类型转换
+
+```js
+// disabled 将被转换为 true
+export default {
+  props: {
+    disabled: [Boolean, Number]
+  }
+}
+
+// disabled 将被转换为 true
+export default {
+  props: {
+    disabled: [Boolean, String]
+  }
+}
+
+// disabled 将被转换为 true
+export default {
+  props: {
+    disabled: [Number, Boolean]
+  }
+}
+
+// disabled 将被解析为空字符串 (disabled="")
+export default {
+  props: {
+    disabled: [String, Boolean]
+  }
+}
+```
+
+### 组件事件
