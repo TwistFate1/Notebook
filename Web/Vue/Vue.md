@@ -345,7 +345,7 @@ export default {
 
 ### 条件渲染
 
-#### v-if
+#### `v-if`
 
 > `v-if` 指令用于条件性地渲染一块内容。这块内容只会在指令的表达式返回真值时才被渲染。
 
@@ -353,7 +353,7 @@ export default {
 <h1 v-if="awesome">Vue is awesome!</h1>
 ```
 
-#### v-else
+#### `v-else`
 
 > 使用 `v-else` 为 `v-if` 添加一个“else 区块”。
 
@@ -364,7 +364,7 @@ export default {
 <h1 v-else>Oh no 😢</h1>
 ```
 
-#### v-else-if
+#### `v-else-if`
 
 > `v-else-if` 提供的是相应于 `v-if` 的“else if 区块”。
 
@@ -389,7 +389,7 @@ export default {
 
 ### 列表渲染
 
-#### v-for
+#### `v-for`
 
 > `v-for` 基于一个数组来渲染一个列表。
 
@@ -1223,3 +1223,344 @@ export default {
 ```
 
 ### 组件事件
+
+#### 触发与监听事件
+
+> 在组件的模板表达式中，可以直接使用 `$emit` 方法触发自定义事件 (例如：在 v-on 的处理函数中）：
+
+```html
+<!-- MyComponent -->
+<button @click="$emit('someEvent')">Click Me</button>
+```
+
+> 在组件实例上也同样以 `this.$emit()` 的形式可用：
+
+```js
+export default {
+  methods: {
+    submit() {
+      this.$emit('someEvent')
+    }
+  }
+}
+```
+
+> 父组件可以通过 `v-on` (缩写为 @) 来监听事件：
+
+```html
+<MyComponent @some-event="callback" />
+```
+
+#### 事件参数
+
+> 可以给 `$emit` 提供一个额外的参数：
+
+```html
+<button @click="$emit('increaseBy', 1)">
+  Increase by 1
+</button>
+```
+
+> 写一个内联的箭头函数作为监听器，此函数会接收到事件附带的参数：
+
+```html
+<MyButton @increase-by="(n) => count += n" />
+```
+
+> 或者，也可以用一个组件方法来作为事件处理函数：
+
+```html
+<MyButton @increase-by="increaseCount" />
+```
+
+> 该方法也会接收到事件所传递的参数：
+
+```js
+methods: {
+  increaseCount(n) {
+    this.count += n
+  }
+}
+```
+
+#### 声明触发的事件
+
+> 组件可以显式地通过 `emits` 选项来声明它要触发的事件：
+
+```js
+export default {
+  emits: ['inFocus', 'submit']
+}
+```
+
+#### 事件校验
+
+> 和对 props 添加类型校验的方式类似，所有触发的事件也可以使用对象形式来描述。
+
+```js
+export default {
+  emits: {
+    // 没有校验
+    click: null,
+
+    // 校验 submit 事件
+    submit: ({ email, password }) => {
+      if (email && password) {
+        return true
+      } else {
+        console.warn('Invalid submit event payload!')
+        return false
+      }
+    }
+  },
+  methods: {
+    submitForm(email, password) {
+      this.$emit('submit', { email, password })
+    }
+  }
+}
+```
+
+### 组件 `v-model`
+
+#### 基本用法
+
+> `v-model` 可以在组件上使用以实现双向绑定。
+>
+> 原生元素上的用法：
+
+```html
+<input v-model="searchText" />
+```
+
+> 等价于：
+
+```html
+<input
+  :value="searchText"
+  @input="searchText = $event.target.value"
+/>
+```
+
+> 而当使用在一个组件上时，`v-model` 会被展开为如下的形式：
+
+```html
+<CustomInput
+  :model-value="searchText"
+  @update:model-value="newValue => searchText = newValue"
+/>
+```
+
+> 组件相应代码：
+
+```html
+<!-- CustomInput.vue -->
+<script>
+export default {
+  props: ['modelValue'],
+  emits: ['update:modelValue']
+}
+</script>
+
+<template>
+  <input
+    :value="modelValue"
+    @input="$emit('update:modelValue', $event.target.value)"
+  />
+</template>
+```
+
+> 另一种实现：
+
+```html
+<!-- CustomInput.vue -->
+<script>
+export default {
+  props: ['modelValue'],
+  emits: ['update:modelValue'],
+  computed: {
+    value: {
+      get() {
+        return this.modelValue
+      },
+      set(value) {
+        this.$emit('update:modelValue', value)
+      }
+    }
+  }
+}
+</script>
+
+<template>
+  <input v-model="value" />
+</template>
+```
+
+#### `v-model` 的参数
+
+> 组件上的 v-model 也可以接受一个参数：
+
+```html
+<MyComponent v-model:title="bookTitle" />
+```
+
+> 组件相应代码：
+
+```html
+<!-- MyComponent.vue -->
+<script>
+export default {
+  props: ['title'],
+  emits: ['update:title']
+}
+</script>
+
+<template>
+  <input
+    type="text"
+    :value="title"
+    @input="$emit('update:title', $event.target.value)"
+  />
+</template>
+```
+
+#### 处理 `v-model` 修饰符
+
+> 创建一个自定义的修饰符 capitalize，它会自动将 v-model 绑定输入的字符串值第一个字母转为大写：
+
+```html
+<MyComponent v-model.capitalize="myText" />
+```
+
+```html
+<script>
+export default {
+  props: {
+    modelValue: String,
+    modelModifiers: {
+      default: () => ({})
+    }
+  },
+  emits: ['update:modelValue'],
+  methods: {
+    emitValue(e) {
+      let value = e.target.value
+      if (this.modelModifiers.capitalize) {
+        value = value.charAt(0).toUpperCase() + value.slice(1)
+      }
+      this.$emit('update:modelValue', value)
+    }
+  }
+}
+</script>
+
+<template>
+  <input type="text" :value="modelValue" @input="emitValue" />
+</template>
+```
+
+### 透传 attributes
+
+#### Attributes 继承
+
+> “透传 attribute”指的是传递给一个组件，却没有被该组件声明为 `props` 或 `emits` 的 attribute 或者 `v-on` 事件监听器。最常见的例子就是 `class`、`style` 和 `id`。
+
+#### 禁用 Attributes 继承
+
+> 如果你不想要一个组件自动地继承 attribute，你可以在组件选项中设置 `inheritAttrs: false`。
+>
+> 这些透传进来的 attribute 可以在模板的表达式中直接用 $attrs 访问到。
+
+- 和 props 有所不同，透传 attributes 在 JavaScript 中保留了它们原始的大小写，所以像 `foo-bar` 这样的一个 attribute 需要通过 `$attrs['foo-bar']` 来访问。
+
+- 像 `@click` 这样的一个 `v-on` 事件监听器将在此对象下被暴露为一个函数 `$attrs.onClick`。
+
+### 插槽 Slots
+
+#### 插槽内容与出口
+
+> 插槽内容可以是任意合法的模板内容，不局限于文本。例如我们可以传入多个元素，甚至是组件：
+
+```html
+<FancyButton>
+  <span style="color:red">Click me!</span>
+  <AwesomeIcon name="plus" />
+</FancyButton>
+```
+
+#### 渲染作用域
+
+> 父组件模板中的表达式只能访问父组件的作用域；子组件模板中的表达式只能访问子组件的作用域。
+
+#### 默认内容
+
+```html
+<button type="submit">
+  <slot>
+    Submit <!-- 默认内容 -->
+  </slot>
+</button>
+```
+
+#### 具名插槽
+
+```html
+<div class="container">
+  <header>
+    <slot name="header"></slot>
+  </header>
+  <main>
+    <slot></slot>
+  </main>
+  <footer>
+    <slot name="footer"></slot>
+  </footer>
+</div>
+```
+
+> 要为具名插槽传入内容，我们需要使用一个含 v-slot 指令的 `<template>` 元素，并将目标插槽的名字传给该指令：
+
+```html
+<BaseLayout>
+  <template v-slot:header>
+    <!-- header 插槽的内容放这里 -->
+  </template>
+</BaseLayout>
+```
+
+> `v-slot` 有对应的简写 `#`，因此 `<template v-slot:header>` 可以简写为 `<template #header>`。
+
+```html
+<BaseLayout>
+  <template #header>
+    <h1>Here might be a page title</h1>
+  </template>
+
+  <template #default>
+    <p>A paragraph for the main content.</p>
+    <p>And another one.</p>
+  </template>
+
+  <template #footer>
+    <p>Here's some contact info</p>
+  </template>
+</BaseLayout>
+```
+
+> 隐式的默认插槽：
+
+```html
+<BaseLayout>
+  <template #header>
+    <h1>Here might be a page title</h1>
+  </template>
+
+  <!-- 隐式的默认插槽 -->
+  <p>A paragraph for the main content.</p>
+  <p>And another one.</p>
+
+  <template #footer>
+    <p>Here's some contact info</p>
+  </template>
+</BaseLayout>
+```
