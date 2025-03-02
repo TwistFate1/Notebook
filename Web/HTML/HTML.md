@@ -944,3 +944,120 @@ WEBVTT
 - `<tbody>` 元素需要包住表格内容的主要部分（不是表头和表尾）。
 
 - `<tfoot>` 元素需要包住表格的表尾部分。一般是最后一行，往往是对前面所有行的总结。
+
+### 嵌套表格
+
+```html
+<table id="table1">
+  <tr>
+    <th>标题 1</th>
+    <th>标题 2</th>
+    <th>标题 3</th>
+  </tr>
+  <tr>
+    <td id="nested">
+      <table id="table2">
+        <tr>
+          <td>单元格 1</td>
+          <td>单元格 2</td>
+          <td>单元格 3</td>
+        </tr>
+      </table>
+    </td>
+    <td>单元格 2</td>
+    <td>单元格 3</td>
+  </tr>
+  <tr>
+    <td>单元格 4</td>
+    <td>单元格 5</td>
+    <td>单元格 6</td>
+  </tr>
+</table>
+```
+
+### 对于视力受损的用户的表格
+
+#### 使用列和行的标题
+
+> `scope` 属性，可以添加在 `<th>` 元素中，以告诉屏幕阅读器该表头的类型——它是所在行的表头，还是所在列的表头。
+
+```html
+<thead>
+  <tr>
+    <th scope="col">购买</th>
+    <th scope="col">位置</th>
+    <th scope="col">时间</th>
+    <th scope="col">评价</th>
+    <th scope="col">成本 (€)</th>
+  </tr>
+</thead>
+```
+
+> 而每一行都可以有一个像这样定义的标题（如果我们把行的标题和列的标题都加上）：
+
+```html
+<tr>
+  <th scope="row">理发</th>
+  <td>理发店</td>
+  <td>12/09</td>
+  <td>好主意</td>
+  <td>30</td>
+</tr>
+```
+
+> `scope` 还有两个可选的值：`colgroup` 和 `rowgroup`。这些用于位于多个列或行的顶部的标题。
+
+```html
+<thead>
+  <tr>
+    <th colspan="3" scope="colgroup">衣物</th>
+  </tr>
+  <tr>
+    <th scope="col">长裤</th>
+    <th scope="col">裙子</th>
+    <th scope="col">连衣裙</th>
+  </tr>
+</thead>
+```
+
+```html
+<tr>
+  <th rowspan="2" scope="rowgroup">荷兰</th>
+  <th scope="row">阿姆斯特丹</th>
+  <td>89</td>
+  <td>34</td>
+  <td>69</td>
+</tr>
+<tr>
+  <th scope="row">乌特勒支</th>
+  <td>80</td>
+  <td>12</td>
+  <td>43</td>
+</tr>
+```
+
+#### `id` 和 `headers` 属性
+
+> 如果要替代 `scope` 属性，可以使用 `id` 和 `headers` 属性来创建标题与单元格之间的联系。
+
+```html
+<thead>
+  <tr>
+    <th id="clothes" colspan="3">衣物</th>
+  </tr>
+  <tr>
+    <th id="trousers" headers="clothes">长裤</th>
+    <th id="skirts" headers="clothes">裙子</th>
+    <th id="dresses" headers="clothes">连衣裙</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <th id="belgium" rowspan="3">比利时</th>
+    <th id="antwerp" headers="belgium">安特卫普</th>
+    <td headers="antwerp belgium clothes trousers">56</td>
+    <td headers="antwerp belgium clothes skirts">22</td>
+    <td headers="antwerp belgium clothes dresses">43</td>
+  </tr>
+</tbody>
+```
