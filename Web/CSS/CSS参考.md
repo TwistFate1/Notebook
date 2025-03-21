@@ -1483,3 +1483,271 @@
 ### table-layout
 
 > `table-layout` CSS 属性定义了用于布局表格的单元格、行和列的算法。
+
+### text-*
+
+#### text-align
+
+> `text-align` CSS 属性设置块元素或者单元格框的行内内容的水平对齐。这意味着其效果和 `vertical-align` 类似，但是是水平方向的。
+
+#### text-align-last
+
+> CSS 属性 `text-align-last` 指定一行或者块中的最后一行在被强制换行之前的对齐规则。
+
+#### text-anchor
+
+> `text-anchor` CSS 属性用于将包含文本字符串的框对齐，其中换行区域由 `inline-size` 属性确定，然后文本相对于元素的锚点放置，该锚点由 `x` 和 `y` （或 `dx` 和 `dy` ）属性定义。如果存在，CSS 属性的值将覆盖元素 `text-anchor` 属性的任何值。
+
+#### text-box
+
+> `text-box` CSS 属性是一个缩写，对应于 `text-box-trim` 和 `text-box-edge` 属性，这两个属性共同指定从文本元素的块容器块起始边缘和块结束边缘修剪的空间量。
+
+#### text-box-edge
+
+> `text-box-edge` CSS 属性指定从文本元素的块容器中修剪的空间量。
+
+#### text-box-trim
+
+> `text-box-trim` CSS 属性指定从文本元素的块容器中修剪文本内容的上边和下边。
+
+#### text-combine-upright
+
+> `text-combine-upright` CSS 属性设置将字符组合到单个字符的空间中。如果组合文本宽度超过 1em，用户代理必须将内容适应到 1em 内。生成的组合被视为单个直立符号进行布局和装饰。此属性仅在垂直书写模式中生效。
+
+#### text-decoration
+
+> `text-decoration` CSS 简写属性设置文本上的装饰性线条的外观。它是 `text-decoration-line`、`text-decoration-color`、`text-decoration-style` 和较新的 `text-decoration-thickness` 属性的缩写。
+
+#### text-decoration-skip-ink
+
+> CSS 属性 `text-decoration-skip-ink` 指定了当下划线和上划线穿过字符的上伸部分和下伸部分时如何绘制。
+
+#### text-decoration-thickness
+
+> CSS 属性 `text-decoration-thickness` 用于设置元素中文本所使用的装饰线（如 line-through、underline 或 overline）的笔触厚度。
+
+#### text-emphasis
+
+> CSS 属性 `text-emphasis` 将强调标记应用到除去空格和控制字符的文本。这个值是 `text-emphasis-style` 和 `text-emphasis-color` 的简写属性。
+
+#### text-emphasis-position
+
+> CSS 属性 `text-emphasis-position` 设置强调标记的位置。强调标记（如注音字符）在没有足够空间时，会自动增加行高。
+
+#### text-indent
+
+> `text-indent` CSS 属性设置区块元素中文本行前面空格（缩进）的长度。
+
+#### text-justify
+
+> CSS 属性 `text-justify` 定义的是当文本的 `text-align` 属性被设置为 `:justify` 时的齐行方法。
+
+#### text-orientation
+
+> `text-orientation` CSS 属性设定行中字符的方向。但它仅影响纵向模式（当 `writing-mode` 的值不是 `horizontal-tb`）下的文本。此属性在控制使用竖排文字的语言的显示上很有作用，也可以用来构建垂直的表格头。
+
+#### text-overflow
+
+> `text-overflow` CSS 属性用于确定如何提示用户存在隐藏的溢出内容。其形式可以是裁剪、显示一个省略号（“…”）或显示一个自定义字符串。
+
+#### text-rendering
+
+> `text-rendering` CSS 属性定义浏览器渲染引擎如何渲染字体。浏览器会在速度、清晰度、几何精度之间进行权衡。
+
+#### text-shadow
+
+> `text-shadow` 为文字添加阴影。可以为文字与 `decoration` 添加多个阴影，阴影值之间用逗号隔开。每个阴影值由元素在 X 和 Y 方向的偏移量、模糊半径和颜色值组成。
+
+#### text-transform
+
+> `text-transform` CSS 属性指定如何将元素的文本大写。它可以用于使文本显示为全大写或全小写，也可单独对每一个单词进行操作。
+
+#### text-underline-offset
+
+> CSS 的 `text-underline-offset` 属性设置文本装饰下划线（使用 `text-decoration` 应用）与其原始位置的偏移距离。
+
+#### text-underline-position
+
+> 当 `text-decoration` 属性的值设置为 `underline` 之后，可以用 `text-underline-position` 属性为其设置下划线的位置。
+
+#### text-wrap
+
+> `text-wrap` CSS 简写属性控制元素内文本的换行方式。不同的值提供：
+
+- 排版改进，例如断行标题的行长更加平衡
+
+- 完全关闭文本换行的方法。
+
+#### text-wrap-mode
+
+> CSS 的 `text-wrap-mode` 属性控制元素内的文本是否换行。不同的值提供了不同的换行方式，用于块级元素的文本内容。它也可以使用 `text-wrap` 简写或 `white-space` 简写来设置和重置。
+
+#### text-wrap-style
+
+> CSS 属性 `text-wrap-style` 控制元素内文本的换行方式。不同的值提供了不同的换行方式，用于块级元素的文本内容。它也可以使用 `text-wrap` 缩写来设置和重置。
+
+#### touch-action
+
+> CSS 属性 `touch-action` 用于设置触摸屏用户如何操纵元素的区域 (例如，浏览器内置的缩放功能)。
+
+### transform-*
+
+#### transform
+
+> CSS `transform` 属性允许你旋转、缩放、倾斜或平移给定元素。这是通过修改 CSS 视觉格式化模型的坐标空间实现的。
+
+#### transform-box
+
+> `transform-box` 属性定义了与 `transform`、`transform-origin` 这两个属性有关联的布局框。
+
+#### transform-origin
+
+> `transform-origin` CSS 属性让你更改一个元素变形的原点。
+
+#### transform-style
+
+> CSS 属性 `transform-style` 设置元素的子元素是位于 3D 空间中还是平面中。
+
+### transition-*
+
+#### transition
+
+> `transition` CSS 属性是 `transition-property`、`transition-duration`、`transition-timing-function` 和 `transition-delay` 的一个简写属性。
+
+#### transition-behavior
+
+> `transition-behavior` CSS 属性指定是否为动画行为为离散的属性启动过渡。
+
+### translate
+
+> CSS 属性 `translate` 允许你单独声明平移变换，并独立于 `transform` 属性。这在一些典型的用户界面上更好用，而且这样就无需在 `transform` 中声明该函数并记住转换函数的确切顺序了。
+
+### unicode-bidi
+
+> CSS `unicode-bidi` 属性，和 `direction` 属性，决定如何处理文档中的双书写方向文本（bidirectional text）。比如，如果一块内容同时包含有从左到右书写和从右到左书写的文本，那么用户代理（the user-agent）会使用复杂的 Unicode 算法来决定如何显示文本。`unicode-bidi` 属性会覆盖此算法，允许开发人员控制文本嵌入（text embedding）。
+
+### user-select
+
+> `user-select` CSS 属性用于控制用户是否可以选择文本。这不会对作为浏览器用户界面（即 chrome）的一部分的内容加载产生任何影响，除非是在文本框中。
+
+### vector-effect
+
+> CSS 属性 `vector-effect` 用于抑制 SVG 中的特定变换效果，从而允许地图上的道路在地图缩放时保持相同的宽度，或者允许图表键在无论其他变换如何的情况下保持其位置和大小。它只能与接受 `vector-effect` 属性的 SVG 元素一起使用。当使用时，CSS 值会覆盖元素 `vector-effect` 属性的所有值。
+
+### vertical-align
+
+> CSS `vertical-align` 属性用来指定行内（inline）、行内区块（inline-block）、表格单元格（table-cell）盒子的垂直对齐方式。
+
+### visibility
+
+> `visibility` CSS 属性显示或隐藏元素而不更改文档的布局。该属性还可以隐藏 `<table>` 中的行或列。
+
+### white-space
+
+> `white-space` CSS 属性用于设置如何处理元素内的空白字符。
+
+### white-space-collapse
+
+> CSS 的 `white-space-collapse` 属性控制元素内部空白如何折叠。
+
+### widows
+
+> CSS 属性 `widows` 可以用来设置一个块级容器在新的分页，区域或者列的顶部需要结合在一起的最小行数。
+
+### width
+
+> `width` 属性用于设置元素的宽度。`width` 默认设置内容区域的宽度，但如果 `box-sizing` 属性被设置为 `border-box`，就转而设置边框区域的宽度。
+
+### will-change
+
+> CSS 属性 `will-change` 为 web 开发者提供了一种告知浏览器该元素会有哪些变化的方法，这样浏览器可以在元素属性真正发生变化之前提前做好对应的优化准备工作。这种优化可以将一部分复杂的计算工作提前准备好，使页面的反应更为快速灵敏。
+
+### word-break
+
+> CSS 属性 `word-break` 指定了怎样在单词内断行。
+
+### word-spacing
+
+> CSS 属性 `word-spacing` 设置标签、单词之间的空格长度。
+
+### writing-mode
+
+> `writing-mode` 属性定义了文本水平或垂直排布以及在块级元素中文本的行进方向。为整个文档设置该属性时，应在根元素上设置它（对于 HTML 文档，应该在 html 元素上设置）。
+
+### x
+
+> `x` CSS 属性定义了 SVG `<rect>` 形状、 `<image>` 图片、 `<foreignObject>` 视口或嵌套的 `<svg>` 视口相对于最近的 `<svg>` 祖先的用户坐标系统的 x 轴坐标。如果存在，它将覆盖元素的 `x` 属性。
+
+### y
+
+> `y` CSS 属性定义了 SVG `<rect>` 形状、 `<image>` 图片、 `<foreignObject>` 视口以及嵌套的 `<svg>` 视口相对于最近的 `<svg>` 祖先的用户坐标系统的 y 轴坐标。如果存在，它将覆盖元素的 `y` 属性。
+
+### z-index
+
+> CSS `z-index` 属性设置定位元素及其后代元素或 flex 项目的 Z 轴顺序。`z-index` 较大的重叠元素会覆盖较小的元素。
+
+### zoom
+
+> `zoom` CSS 属性可以用来控制元素的放大级别。 `transform: scale()` 可以作为此属性的替代品。
+
+## At 规则
+
+### @charset
+
+> `@charset` CSS @规则指定样式表中使用的字符编码。它必须是样式表中的第一个元素，而前面不得有任何字符。因为它不是一个嵌套语句，所以不能在@规则条件组中使用。如果有多个 `@charset` @ 规则被声明，只有第一个会被使用，而且不能在 HTML 元素或 HTML 页面的字符集相关 `<style>` 元素内的样式属性内使用。
+
+### @color-profile
+
+> `@color-profile` CSS at 规则定义并命名一个颜色配置文件，稍后可以在 `color()` 函数中指定颜色。
+
+### @container
+
+> `@container` CSS at 规则是一个条件分组规则，它将样式应用于一个包含上下文。样式声明通过条件过滤，如果条件为真，则应用于容器。条件在查询容器大小、 `<style-feature>` 或滚动状态改变时评估。
+
+### @counter-style
+
+> `@counter-style` 是一个 CSS at 规则让开发者可以自定义计数器的样式。一个 `@counter-style` 规则定义了如何把一个计数器的值转化为字符串表示。
+
+### @font-face
+
+> `@font-face` CSS at-rule 指定一个用于显示文本的自定义字体；字体能从远程服务器或者用户本地安装的字体加载。如果提供了 `local()` 函数，从用户本地查找指定的字体名称，并且找到了一个匹配项，本地字体就会被使用。否则，字体就会使用 `url()` 函数下载的资源。通过允许作者提供他们自己的字体，`@font-face` 让设计内容成为了一种可能，同时并不会被所谓的"网络 - 安全"字体所限制 (字体如此普遍以至于它们能被广泛的使用). 指定查找和使用本地安装的字体名称可以让字体的自定义化程度超过基本字体，同时在不依赖网络情况下实现此功能。在同时使用 `url()` 和 `local()` 功能时，为了用户已经安装的字体副本在需要使用时被使用，如果在用户本地没有找到字体副本就会去使用户下载的副本查找字体。`@font-face` 规则不仅仅使用在 CSS 的顶层，还可以用在任何 CSS 条件组规则中。
+
+### @font-feature-values
+
+> `@font-feature-values` CSS at 规则允许作者在 `font-variant-alternates` 中使用通用名称，用于在 OpenType 中以不同方式激活功能。它允许在使用几种字体时简化 CSS。
+
+### @font-palette-values
+
+> CSS `@font-palette-values` 规则允许您自定义字体制造商创建的默认字体调色板值。
+
+### @import
+
+> `@import` CSS @ 规则用于从其他样式表导入样式规则。这些规则必须先于所有其他类型的规则，`@charset` 规则除外；因为它不是一个嵌套语句，`@import` 不能在条件组的规则中使用。
+
+### @keyframes
+
+> 关键帧 `@keyframes` at 规则通过在动画序列中定义关键帧（或 waypoints）的样式来控制 CSS 动画序列中的中间步骤。和过渡 相比，关键帧 keyframes 可以控制动画序列的中间步骤。
+
+### @media
+
+> `@media` CSS at 规则可用于基于一个或多个媒体查询的结果来应用样式表的一部分。使用它，你可以指定一个媒体查询和一个 CSS 块，当且仅当该媒体查询与正在使用其内容的设备匹配时，该 CSS 块才能应用于该文档。
+
+### @namespace
+
+> `@namespace` 是用来定义使用在 CSS 样式表中的 XML 命名空间的 @规则。定义的命名空间可以把通配、元素和属性选择器限制在指定命名空间里的元素。`@namespace` 规则通常在处理包含多个 namespaces 的文档时才有用，比如 HTML5 里内联的 SVG、MathML 或者混合多个词汇表的 XML。
+
+### @page
+
+> `@page` at 规则是一种 CSS 规则，用于修改打印页面的不同方面。它的目标是修改页面的尺寸、方向和页边距。`@page` at 规则可用于针对打印输出中的所有页面，也可使用其各种伪类来针对一个子集。
+
+### @starting-style
+
+> `@starting-style` CSS at 规则用于定义当元素首次接收样式更新时（即元素首次在之前加载的页面上显示时）要过渡到的属性起始值。
+
+### @supports
+
+> `@supports` CSS at 规则可以指定依赖于浏览器中的一个或多个特定的 CSS 功能的支持声明。这被称为特性查询。该规则可以放在代码的顶层，也可以嵌套在任何其他条件组规则中。
+
+### @view-transition
+
+> 在跨文档导航的情况下，使用 `@view-transition` CSS at 规则来选择当前文档和目标文档进行视图转换。
